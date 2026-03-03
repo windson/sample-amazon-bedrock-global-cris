@@ -13,7 +13,7 @@ Video input options:
 This script downloads a sample video, uploads it to your S3 bucket, and invokes Pegasus.
 
 Author: Navule Pavan Kumar Rao
-Date: January 13, 2026
+Date: March 3, 2026
 """
 
 import json
@@ -68,10 +68,19 @@ def get_account_id() -> str:
 
 
 def download_video(url: str) -> str:
-    """Download video from URL to a temporary file."""
+    """Download video from URL to a temporary file.
+    
+    Only HTTP and HTTPS URLs are allowed for security.
+    """
+    # Validate URL scheme to prevent file:// and other dangerous schemes
+    from urllib.parse import urlparse
+    parsed = urlparse(url)
+    if parsed.scheme not in ('http', 'https'):
+        raise ValueError(f"Invalid URL scheme: {parsed.scheme}. Only http and https are allowed.")
+    
     print("⬇️  Downloading video...")
     tmp_file = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
-    urllib.request.urlretrieve(url, tmp_file.name)
+    urllib.request.urlretrieve(url, tmp_file.name)  # nosec B310 - URL scheme validated above
     file_size = os.path.getsize(tmp_file.name)
     print(f"📦 Downloaded: {file_size / (1024 * 1024):.2f} MB")
     return tmp_file.name
