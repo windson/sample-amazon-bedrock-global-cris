@@ -2,6 +2,8 @@
 
 Amazon Bedrock Global CRIS examples using Claude, Cohere, Amazon Nova, and TwelveLabs Pegasus models.
 
+> Blog: [Access Anthropic Claude models in India on Amazon Bedrock with Global cross-Region inference](https://aws.amazon.com/blogs/machine-learning/access-anthropic-claude-models-in-india-on-amazon-bedrock-with-global-cross-region-inference/)
+
 ## Global cross-Region inference
 
 Global cross-Region inference extends cross-Region inference beyond geographic boundaries, enabling the routing of inference requests to supported commercial AWS Regions worldwide, optimizing available resources and enabling higher model throughput.
