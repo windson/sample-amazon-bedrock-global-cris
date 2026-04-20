@@ -29,17 +29,14 @@ def demo_adaptive_thinking():
     """
     Demonstrate adaptive thinking with different effort levels.
     
-    Effort levels (when supported):
-    - low: Prioritizes speed, minimal thinking
-    - medium: Balanced, may skip thinking for simple queries
-    - high: Default, reliable deep reasoning
-    - max: Exhaustive analysis, Opus 4.6 exclusive
+    Effort levels for Opus 4.6: low, medium, high, max
+    Requires beta header: "effort-2025-11-24"
+    Effort is set via output_config.effort (NOT inside thinking object).
     
-    Note: The effort parameter may not be available during initial rollout.
-    When omitted, adaptive thinking defaults to high effort.
+    Docs: https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-anthropic-claude-messages-request-response.html#effort-parameter-beta
     """
     print("\n" + "=" * 60)
-    print("🧠 DEMO 1: Adaptive Thinking")
+    print("🧠 DEMO 1: Adaptive Thinking with Effort Levels")
     print("=" * 60)
     
     # Complex prompt that benefits from extended thinking
@@ -48,14 +45,24 @@ versus Aurora PostgreSQL for a high-traffic e-commerce application?"""
 
     print(f"\n📝 Complex Prompt: {complex_prompt}")
     
-    # Adaptive thinking (defaults to high effort)
-    print("\n🔹 Testing adaptive thinking (defaults to high effort)")
+    # Adaptive thinking with effort="max" (Opus 4.6 supports: low, medium, high, max)
+    print("\n🔹 Testing adaptive thinking with effort='max'")
     
     request_body = {
         "anthropic_version": "bedrock-2023-05-31",
+        # Effort beta header — required to use output_config.effort
+        # Docs: https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-anthropic-claude-messages-request-response.html#effort-parameter-beta
+        "anthropic_beta": ["effort-2025-11-24"],
         "max_tokens": 4096,
+        # Adaptive thinking: Claude dynamically decides when/how much to think
+        # Docs: https://docs.aws.amazon.com/bedrock/latest/userguide/claude-messages-adaptive-thinking.html
         "thinking": {
             "type": "adaptive"
+        },
+        # Effort parameter: guides how liberally Claude spends tokens
+        # Opus 4.6 levels: "low", "medium", "high", "max"
+        "output_config": {
+            "effort": "max"
         },
         "messages": [
             {
@@ -91,8 +98,8 @@ versus Aurora PostgreSQL for a high-traffic e-commerce application?"""
         usage = model_response["usage"]
         print(f"\n   🔢 Token Usage: {usage.get('input_tokens', 0)} in / {usage.get('output_tokens', 0)} out")
     
-    # Simple query - Claude may skip thinking
-    print("\n🔹 Testing simple query (Claude may skip thinking)")
+    # Simple query with effort="low" - Claude may skip thinking
+    print("\n🔹 Testing simple query with effort='low' (Claude may skip thinking)")
     
     simple_prompt = "What is the capital of France?"
     
@@ -100,6 +107,7 @@ versus Aurora PostgreSQL for a high-traffic e-commerce application?"""
         {"role": "user", "content": [{"type": "text", "text": simple_prompt}]}
     ]
     request_body["max_tokens"] = 2048
+    request_body["output_config"] = {"effort": "low"}
     
     response = bedrock.invoke_model(
         modelId=MODEL_ID,

@@ -18,10 +18,24 @@ Global cross-Region inference extends cross-Region inference beyond geographic b
 │   ├── embeddings_models
 │   │   └── simple_cohere_embed_example.py
 │   └── foundation_models
+│       ├── common
+│       │   ├── __init__.py
+│       │   ├── colors.py
+│       │   ├── context_generator.py
+│       │   └── context
+│       │       ├── __init__.py
+│       │       ├── loader.py
+│       │       └── docs
+│       │           ├── api_design_guidelines.md
+│       │           ├── microservices_architecture.md
+│       │           ├── payment_system_rfc.md
+│       │           └── security_audit_report.md
+│       ├── pyproject.toml
 │       ├── converse
 │       │   ├── simple_claude_haiku_converse_example.py
 │       │   ├── simple_claude_opus_converse_example.py
 │       │   ├── simple_claude_opus_4_6_converse_example.py
+│       │   ├── simple_claude_opus_4_7_converse_example.py
 │       │   ├── simple_claude_sonnet_converse_example.py
 │       │   ├── simple_claude_sonnet_4_6_converse_example.py
 │       │   └── simple_nova_lite_converse_example.py
@@ -29,6 +43,7 @@ Global cross-Region inference extends cross-Region inference beyond geographic b
 │       │   ├── simple_claude_haiku_converse_stream_example.py
 │       │   ├── simple_claude_opus_converse_stream_example.py
 │       │   ├── simple_claude_opus_4_6_converse_stream_example.py
+│       │   ├── simple_claude_opus_4_7_converse_stream_example.py
 │       │   ├── simple_claude_sonnet_converse_stream_example.py
 │       │   ├── simple_claude_sonnet_4_6_converse_stream_example.py
 │       │   └── simple_nova_lite_converse_stream_example.py
@@ -37,6 +52,13 @@ Global cross-Region inference extends cross-Region inference beyond geographic b
 │       │   ├── simple_claude_opus_invoke_model_example.py
 │       │   ├── simple_claude_opus_4_6_invoke_model_example.py
 │       │   ├── advanced_claude_opus_4_6_invoke_model_example.py
+│       │   ├── simple_claude_opus_4_7_invoke_model_example.py
+│       │   ├── advanced_examples
+│       │   │   └── claude_opus_4_7
+│       │   │       ├── advanced_adaptive_thinking_example.py
+│       │   │       ├── advanced_compaction_example.py
+│       │   │       ├── advanced_custom_summarization_example.py
+│       │   │       └── advanced_pause_compaction_example.py
 │       │   ├── simple_claude_sonnet_invoke_model_example.py
 │       │   ├── simple_claude_sonnet_4_6_invoke_model_example.py
 │       │   ├── simple_nova_lite_invoke_model_example.py
@@ -46,6 +68,13 @@ Global cross-Region inference extends cross-Region inference beyond geographic b
 │       │   ├── simple_claude_opus_invoke_model_stream_example.py
 │       │   ├── simple_claude_opus_4_6_invoke_model_stream_example.py
 │       │   ├── advanced_claude_opus_4_6_invoke_model_stream_example.py
+│       │   ├── simple_claude_opus_4_7_invoke_model_stream_example.py
+│       │   ├── advanced_examples
+│       │   │   └── claude_opus_4_7
+│       │   │       ├── advanced_adaptive_thinking_stream_example.py
+│       │   │       ├── advanced_compaction_stream_example.py
+│       │   │       ├── advanced_custom_summarization_stream_example.py
+│       │   │       └── advanced_pause_compaction_stream_example.py
 │       │   ├── simple_claude_sonnet_invoke_model_stream_example.py
 │       │   ├── simple_claude_sonnet_4_6_invoke_model_stream_example.py
 │       │   ├── simple_nova_lite_invoke_model_stream_example.py
@@ -61,6 +90,7 @@ Global cross-Region inference extends cross-Region inference beyond geographic b
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+pip install -e global-cris/foundation_models/   # Shared utilities for advanced examples
 ```
 
 ### Environment Configuration (for Pegasus examples)
@@ -84,6 +114,7 @@ Global endpoints route requests worldwide for optimal throughput and resilience.
 python global-cris/foundation_models/converse/simple_claude_haiku_converse_example.py
 python global-cris/foundation_models/converse/simple_claude_opus_converse_example.py
 python global-cris/foundation_models/converse/simple_claude_opus_4_6_converse_example.py
+python global-cris/foundation_models/converse/simple_claude_opus_4_7_converse_example.py
 python global-cris/foundation_models/converse/simple_claude_sonnet_converse_example.py
 python global-cris/foundation_models/converse/simple_claude_sonnet_4_6_converse_example.py
 python global-cris/foundation_models/converse/simple_nova_lite_converse_example.py
@@ -95,6 +126,7 @@ python global-cris/foundation_models/converse/simple_nova_lite_converse_example.
 python global-cris/foundation_models/converse_stream/simple_claude_haiku_converse_stream_example.py
 python global-cris/foundation_models/converse_stream/simple_claude_opus_converse_stream_example.py
 python global-cris/foundation_models/converse_stream/simple_claude_opus_4_6_converse_stream_example.py
+python global-cris/foundation_models/converse_stream/simple_claude_opus_4_7_converse_stream_example.py
 python global-cris/foundation_models/converse_stream/simple_claude_sonnet_converse_stream_example.py
 python global-cris/foundation_models/converse_stream/simple_claude_sonnet_4_6_converse_stream_example.py
 python global-cris/foundation_models/converse_stream/simple_nova_lite_converse_stream_example.py
@@ -106,6 +138,7 @@ python global-cris/foundation_models/converse_stream/simple_nova_lite_converse_s
 python global-cris/foundation_models/invoke_model/simple_claude_haiku_invoke_model_example.py
 python global-cris/foundation_models/invoke_model/simple_claude_opus_invoke_model_example.py
 python global-cris/foundation_models/invoke_model/simple_claude_opus_4_6_invoke_model_example.py
+python global-cris/foundation_models/invoke_model/simple_claude_opus_4_7_invoke_model_example.py
 python global-cris/foundation_models/invoke_model/simple_claude_sonnet_invoke_model_example.py
 python global-cris/foundation_models/invoke_model/simple_claude_sonnet_4_6_invoke_model_example.py
 python global-cris/foundation_models/invoke_model/simple_nova_lite_invoke_model_example.py
@@ -118,6 +151,7 @@ python global-cris/foundation_models/invoke_model/simple_pegasus_invoke_model_ex
 python global-cris/foundation_models/invoke_model_with_response_stream/simple_claude_haiku_invoke_model_stream_example.py
 python global-cris/foundation_models/invoke_model_with_response_stream/simple_claude_opus_invoke_model_stream_example.py
 python global-cris/foundation_models/invoke_model_with_response_stream/simple_claude_opus_4_6_invoke_model_stream_example.py
+python global-cris/foundation_models/invoke_model_with_response_stream/simple_claude_opus_4_7_invoke_model_stream_example.py
 python global-cris/foundation_models/invoke_model_with_response_stream/simple_claude_sonnet_invoke_model_stream_example.py
 python global-cris/foundation_models/invoke_model_with_response_stream/simple_claude_sonnet_4_6_invoke_model_stream_example.py
 python global-cris/foundation_models/invoke_model_with_response_stream/simple_nova_lite_invoke_model_stream_example.py
@@ -134,6 +168,36 @@ python global-cris/foundation_models/invoke_model/advanced_claude_opus_4_6_invok
 
 # Streaming with adaptive thinking visualization and compaction
 python global-cris/foundation_models/invoke_model_with_response_stream/advanced_claude_opus_4_6_invoke_model_stream_example.py
+```
+
+#### Claude Opus 4.7 Advanced Features
+
+These examples demonstrate Opus 4.7 advanced features, split into individual scripts per use case. Note that Opus 4.7 no longer supports `temperature`, `top_p`, or `top_k` sampling parameters.
+
+```bash
+# InvokeModel — adaptive thinking (complex vs simple queries)
+python global-cris/foundation_models/invoke_model/advanced_examples/claude_opus_4_7/advanced_adaptive_thinking_example.py
+
+# InvokeModel — compaction for long conversations (with billing tracking)
+python global-cris/foundation_models/invoke_model/advanced_examples/claude_opus_4_7/advanced_compaction_example.py
+
+# InvokeModel — compaction with custom summarization instructions
+python global-cris/foundation_models/invoke_model/advanced_examples/claude_opus_4_7/advanced_custom_summarization_example.py
+
+# InvokeModel — pause after compaction (inspect/modify/continue workflow)
+python global-cris/foundation_models/invoke_model/advanced_examples/claude_opus_4_7/advanced_pause_compaction_example.py
+
+# Streaming — adaptive thinking with real-time thinking blocks
+python global-cris/foundation_models/invoke_model_with_response_stream/advanced_examples/claude_opus_4_7/advanced_adaptive_thinking_stream_example.py
+
+# Streaming — compaction with streaming responses
+python global-cris/foundation_models/invoke_model_with_response_stream/advanced_examples/claude_opus_4_7/advanced_compaction_stream_example.py
+
+# Streaming — compaction with custom summarization instructions
+python global-cris/foundation_models/invoke_model_with_response_stream/advanced_examples/claude_opus_4_7/advanced_custom_summarization_stream_example.py
+
+# Streaming — pause after compaction (inspect/modify/continue workflow)
+python global-cris/foundation_models/invoke_model_with_response_stream/advanced_examples/claude_opus_4_7/advanced_pause_compaction_stream_example.py
 ```
 
 #### Embeddings

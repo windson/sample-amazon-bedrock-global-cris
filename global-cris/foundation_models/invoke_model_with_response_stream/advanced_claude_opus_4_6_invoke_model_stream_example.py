@@ -25,16 +25,18 @@ MODEL_ID = "global.anthropic.claude-opus-4-6-v1"
 
 def demo_adaptive_thinking_stream():
     """
-    Demonstrate adaptive thinking with streaming.
+    Demonstrate adaptive thinking with streaming and effort control.
     
     With streaming, you can see Claude's thinking in real-time
     as it reasons through complex problems.
     
-    Note: The effort parameter may not be available during initial rollout.
-    When omitted, adaptive thinking defaults to high effort.
+    Effort levels for Opus 4.6: low, medium, high, max
+    Requires beta header: "effort-2025-11-24"
+    
+    Docs: https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-anthropic-claude-messages-request-response.html#effort-parameter-beta
     """
     print("\n" + "=" * 60)
-    print("🧠 DEMO 1: Adaptive Thinking with Streaming")
+    print("🧠 DEMO 1: Adaptive Thinking with Streaming (effort='max')")
     print("=" * 60)
     
     # Complex prompt that benefits from extended thinking
@@ -48,9 +50,19 @@ Consider team size, deployment complexity, and scaling requirements."""
     
     request_body = {
         "anthropic_version": "bedrock-2023-05-31",
+        # Effort beta header — required to use output_config.effort
+        # Docs: https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-anthropic-claude-messages-request-response.html#effort-parameter-beta
+        "anthropic_beta": ["effort-2025-11-24"],
         "max_tokens": 8000,
+        # Adaptive thinking: Claude dynamically decides when/how much to think
+        # Docs: https://docs.aws.amazon.com/bedrock/latest/userguide/claude-messages-adaptive-thinking.html
         "thinking": {
             "type": "adaptive"
+        },
+        # Effort parameter: guides how liberally Claude spends tokens
+        # Opus 4.6 levels: "low", "medium", "high", "max"
+        "output_config": {
+            "effort": "max"
         },
         "messages": [
             {
@@ -111,26 +123,34 @@ Consider team size, deployment complexity, and scaling requirements."""
 
 def demo_effort_levels_stream():
     """
-    Demonstrate adaptive thinking with streaming.
+    Demonstrate adaptive thinking with effort='low' via streaming.
     
-    Note: The effort parameter (low, medium, high, max) may not be 
-    available during initial rollout. This demo shows adaptive thinking
-    which defaults to high effort when effort is not specified.
+    Effort levels for Opus 4.6: low, medium, high, max
+    Requires beta header: "effort-2025-11-24"
+    
+    Docs: https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-anthropic-claude-messages-request-response.html#effort-parameter-beta
     """
     print("\n" + "=" * 60)
-    print("⚡ DEMO 2: Adaptive Thinking Streaming")
+    print("⚡ DEMO 2: Adaptive Thinking Streaming (effort='low')")
     print("=" * 60)
     
     prompt = "What are the key principles of clean code architecture?"
     
-    print(f"\n🔹 Testing adaptive thinking (defaults to high effort)")
+    print(f"\n🔹 Testing adaptive thinking with effort='low'")
     print("-" * 40)
     
     request_body = {
         "anthropic_version": "bedrock-2023-05-31",
+        # Effort beta header — required to use output_config.effort
+        "anthropic_beta": ["effort-2025-11-24"],
         "max_tokens": 4000,
+        # Adaptive thinking: Claude dynamically decides when/how much to think
         "thinking": {
             "type": "adaptive"
+        },
+        # Effort "low": Claude minimizes thinking, prioritizes speed
+        "output_config": {
+            "effort": "low"
         },
         "messages": [
             {

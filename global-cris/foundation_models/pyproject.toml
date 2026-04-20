@@ -1,0 +1,11 @@
+[project]
+name = "bedrock-global-cris-examples"
+version = "0.1.0"
+description = "Shared utilities for Amazon Bedrock Global CRIS advanced examples"
+requires-python = ">=3.10"
+authors = [
+    {name = "Navule Pavan Kumar Rao"}
+]
+
+[tool.setuptools.packages.find]
+include = ["common*"]
