@@ -22,6 +22,7 @@ Global cross-Region inference extends cross-Region inference beyond geographic b
 | Claude Sonnet | `global.anthropic.claude-sonnet` | [converse](global-cris/foundation_models/converse/simple_claude_sonnet_converse_example.py) | [stream](global-cris/foundation_models/converse_stream/simple_claude_sonnet_converse_stream_example.py) | [invoke](global-cris/foundation_models/invoke_model/simple_claude_sonnet_invoke_model_example.py) | [stream](global-cris/foundation_models/invoke_model_with_response_stream/simple_claude_sonnet_invoke_model_stream_example.py) |
 | Claude Sonnet 4.6 | `global.anthropic.claude-sonnet-4-6` | [converse](global-cris/foundation_models/converse/simple_claude_sonnet_4_6_converse_example.py) | [stream](global-cris/foundation_models/converse_stream/simple_claude_sonnet_4_6_converse_stream_example.py) | [invoke](global-cris/foundation_models/invoke_model/simple_claude_sonnet_4_6_invoke_model_example.py) | [stream](global-cris/foundation_models/invoke_model_with_response_stream/simple_claude_sonnet_4_6_invoke_model_stream_example.py) |
 | Claude Sonnet 5 | `global.anthropic.claude-sonnet-5` | [converse](global-cris/foundation_models/converse/simple_claude_sonnet_5_converse_example.py) | [stream](global-cris/foundation_models/converse_stream/simple_claude_sonnet_5_converse_stream_example.py) | [invoke](global-cris/foundation_models/invoke_model/simple_claude_sonnet_5_invoke_model_example.py) | [stream](global-cris/foundation_models/invoke_model_with_response_stream/simple_claude_sonnet_5_invoke_model_stream_example.py) |
+| Claude Fable 5 | `global.anthropic.claude-fable-5` | [converse](global-cris/foundation_models/converse/simple_claude_fable_5_converse_example.py) | [stream](global-cris/foundation_models/converse_stream/simple_claude_fable_5_converse_stream_example.py) | [invoke](global-cris/foundation_models/invoke_model/simple_claude_fable_5_invoke_model_example.py) | [stream](global-cris/foundation_models/invoke_model_with_response_stream/simple_claude_fable_5_invoke_model_stream_example.py) |
 | Amazon Nova Lite | `global.amazon.nova-lite` | [converse](global-cris/foundation_models/converse/simple_nova_lite_converse_example.py) | [stream](global-cris/foundation_models/converse_stream/simple_nova_lite_converse_stream_example.py) | [invoke](global-cris/foundation_models/invoke_model/simple_nova_lite_invoke_model_example.py) | [stream](global-cris/foundation_models/invoke_model_with_response_stream/simple_nova_lite_invoke_model_stream_example.py) |
 | TwelveLabs Pegasus | — | — | — | [invoke](global-cris/foundation_models/invoke_model/simple_pegasus_invoke_model_example.py) | [stream](global-cris/foundation_models/invoke_model_with_response_stream/simple_pegasus_invoke_model_stream_example.py) |
 
@@ -44,6 +45,10 @@ Advanced examples demonstrate features like adaptive thinking with effort levels
 | Claude Sonnet 5 | Compaction | [invoke](global-cris/foundation_models/invoke_model/advanced_examples/claude_sonnet_5/advanced_compaction_example.py) | [stream](global-cris/foundation_models/invoke_model_with_response_stream/advanced_examples/claude_sonnet_5/advanced_compaction_stream_example.py) |
 | Claude Sonnet 5 | Custom Summarization | [invoke](global-cris/foundation_models/invoke_model/advanced_examples/claude_sonnet_5/advanced_custom_summarization_example.py) | [stream](global-cris/foundation_models/invoke_model_with_response_stream/advanced_examples/claude_sonnet_5/advanced_custom_summarization_stream_example.py) |
 | Claude Sonnet 5 | Pause After Compaction | [invoke](global-cris/foundation_models/invoke_model/advanced_examples/claude_sonnet_5/advanced_pause_compaction_example.py) | [stream](global-cris/foundation_models/invoke_model_with_response_stream/advanced_examples/claude_sonnet_5/advanced_pause_compaction_stream_example.py) |
+| Claude Fable 5 | Adaptive Thinking (always on) | [invoke](global-cris/foundation_models/invoke_model/advanced_examples/claude_fable_5/advanced_adaptive_thinking_example.py) | [stream](global-cris/foundation_models/invoke_model_with_response_stream/advanced_examples/claude_fable_5/advanced_adaptive_thinking_stream_example.py) |
+| Claude Fable 5 | Compaction | [invoke](global-cris/foundation_models/invoke_model/advanced_examples/claude_fable_5/advanced_compaction_example.py) | [stream](global-cris/foundation_models/invoke_model_with_response_stream/advanced_examples/claude_fable_5/advanced_compaction_stream_example.py) |
+| Claude Fable 5 | Custom Summarization | [invoke](global-cris/foundation_models/invoke_model/advanced_examples/claude_fable_5/advanced_custom_summarization_example.py) | [stream](global-cris/foundation_models/invoke_model_with_response_stream/advanced_examples/claude_fable_5/advanced_custom_summarization_stream_example.py) |
+| Claude Fable 5 | Pause After Compaction | [invoke](global-cris/foundation_models/invoke_model/advanced_examples/claude_fable_5/advanced_pause_compaction_example.py) | [stream](global-cris/foundation_models/invoke_model_with_response_stream/advanced_examples/claude_fable_5/advanced_pause_compaction_stream_example.py) |
 
 ### Embeddings Models
 
@@ -66,6 +71,7 @@ Advanced examples demonstrate features like adaptive thinking with effort levels
 | Claude Opus 4.8 | 1M | 128K | Adaptive thinking | **Not supported** | Deepest reasoning, long autonomous tasks |
 | Claude Sonnet 4.6 | 1M | 128K | — | `temperature`, `top_p`, `top_k` supported | Balanced speed and intelligence |
 | Claude Sonnet 5 | 1M | 128K | **Always ON** (cannot disable) | **Not supported** | Near-Opus intelligence at Sonnet pricing |
+| Claude Fable 5 | 1M | 128K | **Always ON** (cannot disable) | temperature=1.0 or unset; top_p>=0.99 or unset; top_k **not supported** | Multi-day autonomous tasks, requires data retention opt-in |
 
 ## Setup
 
@@ -75,6 +81,26 @@ source venv/bin/activate
 pip install -r requirements.txt
 pip install -e global-cris/foundation_models/   # Shared utilities for advanced examples
 ```
+
+### Data Retention Setup (Required for Claude Fable 5)
+
+Claude Fable 5 and Mythos-class models require a data retention opt-in (`provider_data_share`) before first invocation. Run the setup script:
+
+```bash
+# Auto-confirm (default behavior)
+python global-cris/foundation_models/setup_data_retention.py
+
+# Single region only
+python global-cris/foundation_models/setup_data_retention.py --region us-east-1
+
+# Interactive mode (requires explicit confirmation)
+python global-cris/foundation_models/setup_data_retention.py --no-confirm
+
+# List current settings without making changes
+python global-cris/foundation_models/setup_data_retention.py --list
+```
+
+> **Note:** Once opted in, Anthropic retains inference data for 30 days with human review. Data leaves the AWS security boundary. See [Amazon Bedrock abuse detection](https://docs.aws.amazon.com/bedrock/latest/userguide/abuse-detection.html) for details.
 
 ### Environment Configuration (for Pegasus examples)
 
@@ -100,6 +126,8 @@ cp .env.example .env
 - [Claude Sonnet 5 model card](https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-anthropic-claude-sonnet-5.html)
 - [Claude Opus 4.8 on AWS (Blog)](https://aws.amazon.com/blogs/machine-learning/claude-opus-4-8-is-now-available-on-aws/)
 - [Claude Sonnet 5 on AWS (Blog)](https://aws.amazon.com/blogs/machine-learning/introducing-claude-sonnet-5-on-aws-anthropics-most-capable-sonnet-model/)
+- [Claude Fable 5 model card](https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-anthropic-claude-fable-5.html)
+- [Claude Fable 5 on AWS (Blog)](https://aws.amazon.com/blogs/aws/anthropic-claude-fable-5-on-aws-mythos-class-capabilities-with-built-in-safeguards-now-available/)
 
 ## Security
 
